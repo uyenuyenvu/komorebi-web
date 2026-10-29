@@ -1,0 +1,11 @@
+{
+  "name": "komorebi",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Komorebi manga reader — bản tách file + môi trường chạy local",
+  "scripts": {
+    "dev": "node dev/server.mjs",
+    "dev:real": "node dev/server.mjs --real"
+  },
+  "engines": { "node": ">=18" }
+}

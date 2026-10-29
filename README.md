@@ -1,4 +1,3 @@
-[Uploading README.md…]()
 # 🍃 Komorebi — đọc truyện tranh
 
 Code được tách theo từng chức năng, kèm môi trường chạy local với **Supabase giả lập**. Nhờ vậy có thể UT thoải mái mà không đụng tới dữ liệu thật.
