@@ -1,0 +1,58 @@
+/* ===== v22: icon vẽ tay, chuông có thông báo, khung avatar lá hoa ===== */
+.icon-btn svg.doodle { width: 30px; height: 30px; overflow: visible; fill: none; }
+.doodle path { fill: none; stroke: var(--mau-trang-chu); stroke-width: 2.3; stroke-linecap: round; stroke-linejoin: round; }
+.doodle .fillable { fill: transparent; transition: fill .25s; }
+.icon-btn:hover .doodle { animation: doodleWiggle .55s ease-in-out; }
+@keyframes doodleWiggle { 0%,100% { transform: rotate(0); } 30% { transform: rotate(-10deg); } 65% { transform: rotate(8deg); } }
+.star-btn:hover .fillable, body[data-screen="favorites"] .star-btn .fillable { fill: var(--mau-vang); }
+.icon-btn .spark { position: absolute; font-size: .7rem; color: var(--mau-vang); opacity: 0; pointer-events: none; line-height: 1; }
+.icon-btn .spark.s1 { top: 2px; left: 3px; } .icon-btn .spark.s2 { top: 10px; right: -3px; font-size: .55rem; } .icon-btn .spark.s3 { bottom: 4px; left: 0; font-size: .5rem; }
+#bellBtn.has-new { background: rgba(255,255,255,.16); }
+#bellBtn.has-new::after { content: ""; position: absolute; inset: 2px; border-radius: 50%; border: 2px dashed var(--mau-vang); animation: bellHalo 2.6s ease-out infinite; pointer-events: none; }
+#bellBtn.has-new .doodle { transform-origin: 50% 14%; animation: bellRing 2.6s ease-in-out infinite; }
+#bellBtn.has-new .bell-body { fill: var(--mau-vang); }
+#bellBtn.has-new .spark { animation: twinkle 2.6s ease-in-out infinite; }
+#bellBtn.has-new .spark.s2 { animation-delay: .4s; } #bellBtn.has-new .spark.s3 { animation-delay: .8s; }
+#bellBtn.has-new .badge { animation: badgeBob 2.6s ease-in-out infinite; }
+@keyframes bellRing { 0%,42%,100% { transform: rotate(0); } 6% { transform: rotate(-18deg); } 12% { transform: rotate(15deg); } 18% { transform: rotate(-11deg); } 24% { transform: rotate(7deg); } 30% { transform: rotate(-4deg); } 36% { transform: rotate(2deg); } }
+@keyframes bellHalo { 0% { transform: scale(.8); opacity: .9; } 70%,100% { transform: scale(1.35); opacity: 0; } }
+@keyframes twinkle { 0%,100% { opacity: 0; transform: scale(.5) rotate(0); } 20%,45% { opacity: 1; transform: scale(1.15) rotate(25deg); } 60% { opacity: 0; } }
+@keyframes badgeBob { 0%,40%,100% { transform: translateY(0) scale(1); } 8% { transform: translateY(-4px) scale(1.15); } 16% { transform: translateY(0) scale(.95); } }
+.icon-btn .badge { border-color: var(--mau-xanh); }
+
+.av-wrap { position: relative; display: inline-grid; place-items: center; flex: none; }
+.av-wrap .wreath { position: absolute; left: -8px; top: -8px; width: calc(100% + 16px); height: calc(100% + 16px); pointer-events: none; overflow: visible; z-index: 2; transition: transform .5s cubic-bezier(.3,.7,.3,1); }
+.av-wrap:hover .wreath { transform: rotate(8deg) scale(1.04); }
+.av-wrap.lg .wreath { left: -29px; top: -29px; width: calc(100% + 58px); height: calc(100% + 58px); }
+.avatar-circle { border: 0; }
+.dd-me .av { border: 0; }
+.dd-me { width: 100%; border: 0; background: transparent; cursor: pointer; text-align: left; border-radius: 12px; color: inherit; font: inherit; }
+.dd-me:hover { background: var(--mau-xanh-nhat); }
+.dd-me .dd-go { margin-left: auto; font-family: 'Patrick Hand', cursive; font-size: 1.3rem; color: var(--mau-xanh-dam); padding-right: 4px; }
+.av-wrap.lg .pf-av { box-shadow: none; border: 0; }
+.pf-card { grid-template-columns: 220px 1fr; }
+.pf-card > .av-wrap, .pf-edit-av > .av-wrap { justify-self: center; margin: 30px 0; }
+.pf-edit-av .av-wrap { margin: 30px 0 26px; }
+.dd-me .av-wrap { margin: 4px 6px 4px 4px; }
+
+/* lọc lịch sử theo ngày */
+.hist-filter { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin: -0.2rem 0 1.2rem; padding: 12px 14px; background: var(--mau-giay); border: 2px solid var(--mau-net); border-radius: var(--tay-vua); box-shadow: 3px 4px 0 var(--bong); }
+.hf-date { display: flex; flex-direction: column; gap: 4px; }
+.hf-date span { font-family: 'Patrick Hand', cursive; color: var(--mau-xanh-dam); font-size: 1rem; }
+.hf-date input { padding: 8px 12px; border: 2px solid var(--mau-net); border-radius: var(--tay-vua); background: var(--mau-kem); color: var(--mau-nau); font-family: 'EB Garamond', serif; font-size: 1.05rem; outline: none; }
+.hf-date input:focus { border-color: var(--mau-xanh); }
+.hf-date.on input { border-color: var(--mau-xanh); background: var(--mau-xanh-nhat); }
+.hf-quick { display: flex; gap: 6px; flex-wrap: wrap; }
+.hf-quick button { border: 2px solid var(--mau-net); background: var(--mau-kem); color: var(--mau-nau); border-radius: var(--tay-nut); padding: 6px 14px; cursor: pointer; font-family: 'Patrick Hand', cursive; font-size: 1rem; }
+.hf-quick button:hover { border-color: var(--mau-xanh); background: var(--mau-xanh-nhat); }
+.hf-quick button[aria-pressed="true"] { background: var(--mau-xanh); border-color: var(--mau-xanh-dam); color: var(--mau-trang-chu); }
+.hf-note { flex-basis: 100%; margin: 0; font-size: .88rem; color: var(--mau-nau-nhat); }
+.hist-chips { display: inline-flex; flex-wrap: wrap; gap: 4px; vertical-align: middle; }
+.hist-chips span { font-family: 'Patrick Hand', cursive; font-size: .85rem; background: var(--mau-xanh-nhat); color: var(--mau-xanh-dam); border-radius: 999px; padding: 0 8px; }
+
+@media (max-width: 680px) {
+  .pf-card { grid-template-columns: 1fr; }
+  .hist-filter { align-items: stretch; }
+  .hf-date { flex: 1 1 100%; }
+  .hf-date input { width: 100%; }
+}

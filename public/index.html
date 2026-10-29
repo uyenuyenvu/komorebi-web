@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Komorebi · Manga Reader</title>
+<script>
+(function(){try{var t=localStorage.getItem('komorebi.theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+</script>
+
+<meta name="theme-color" content="#6E987C">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍃</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/00-base.css">
+<link rel="stylesheet" href="/css/01-filters-detail-reader.css">
+<link rel="stylesheet" href="/css/02-upload.css">
+<link rel="stylesheet" href="/css/03-layout-menu-home.css">
+<link rel="stylesheet" href="/css/04-master-dialog-settings.css">
+<link rel="stylesheet" href="/css/05-reader-user.css">
+<link rel="stylesheet" href="/css/06-icons-avatar.css">
+<link rel="stylesheet" href="/css/07-upload-progress.css">
+<link rel="stylesheet" href="/css/08-preview-roles.css">
+<link rel="stylesheet" href="/css/09-header-reader-tools.css">
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="/config.js"></script>
+</head>
+<body id="top" class="locked">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <filter id="crayon" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" seed="3" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8" xChannelSelector="R" yChannelSelector="G" result="d"/>
+      <feTurbulence type="fractalNoise" baseFrequency="1.6" numOctaves="1" seed="9" result="g"/>
+      <feColorMatrix in="g" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 -0.55 1.2" result="speck"/>
+      <feComposite in="d" in2="speck" operator="in"/>
+    </filter>
+    <symbol id="wreath" viewBox="0 0 100 100"><g filter="url(#crayon)"><path d="M88.1 50.0 L87.5 58.0 L85.6 65.8 L80.9 72.4 L75.6 78.4 L69.2 83.2 L61.6 85.8 L54.0 88.0 L46.0 88.2 L38.0 86.8 L31.3 82.4 L24.7 78.1 L19.7 72.0 L14.6 65.8 L12.3 58.0 L12.6 50.0 L11.8 41.9 L14.3 34.1 L18.9 27.4 L24.3 21.5 L31.2 17.5 L38.5 14.5 L46.0 12.0 L53.9 12.8 L61.6 14.2 L68.9 17.3 L75.0 22.2 L80.9 27.6 L84.8 34.5 L88.0 41.9 L88.2 50.0" fill="none" stroke="#7FA88C" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M89.6 54.9 L86.7 64.8 L81.9 74.0 L74.3 81.1 L65.3 86.0 L55.7 90.3 L45.0 90.4 L34.9 87.4 L25.9 82.0 L19.1 74.1 L14.1 65.2 L11.2 55.4 L11.6 45.3 L12.7 34.9 L18.5 26.3 L25.2 18.2 L34.6 13.8 L44.3 9.8 L54.9 9.9 L64.4 14.3 L73.4 18.9 L81.9 25.1 L86.4 34.6 L90.3 44.3 L89.1 54.8" fill="none" stroke="#B5D29B" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" opacity=".9"/><path d="M0 0C3.4-4.4 10.4-4.8 15 0C10.4 4.8 3.4 4.4 0 0Z" fill="#8FBF8A" stroke="#5F8452" stroke-width=".8" transform="translate(51.4 10.0) rotate(200) scale(1.05)"/><path d="M1.5 0L12 0" stroke="#5F8452" stroke-width=".6" stroke-linecap="round" transform="translate(51.4 10.0) rotate(200) scale(1.05)"/><path d="M0 0C3.4-4.4 10.4-4.8 15 0C10.4 4.8 3.4 4.4 0 0Z" fill="#6E987C" stroke="#5F8452" stroke-width=".8" transform="translate(62.7 11.0) rotate(245) scale(0.95)"/><path d="M1.5 0L12 0" stroke="#5F8452" stroke-width=".6" stroke-linecap="round" transform="translate(62.7 11.0) rotate(245) scale(0.95)"/><path d="M0 0C3.4-4.4 10.4-4.8 15 0C10.4 4.8 3.4 4.4 0 0Z" fill="#A9CB8C" stroke="#5F8452" stroke-width=".8" transform="translate(90.6 44.3) rotate(300) scale(1.0)"/><path d="M1.5 0L12 0" stroke="#5F8452" stroke-width=".6" stroke-linecap="round" transform="translate(90.6 44.3) rotate(300) scale(1.0)"/><path d="M0 0C3.4-4.4 10.4-4.8 15 0C10.4 4.8 3.4 4.4 0 0Z" fill="#8FBF8A" stroke="#5F8452" stroke-width=".8" transform="translate(89.4 56.9) rotate(40) scale(0.9)"/><path d="M1.5 0L12 0" stroke="#5F8452" stroke-width=".6" stroke-linecap="round" transform="translate(89.4 56.9) rotate(40) scale(0.9)"/><path d="M0 0C3.4-4.4 10.4-4.8 15 0C10.4 4.8 3.4 4.4 0 0Z" fill="#6E987C" stroke="#5F8452" stroke-width=".8" transform="translate(92.0 31.3) rotate(330) scale(0.75)"/><path d="M1.5 0L12 0" stroke="#5F8452" stroke-width=".6" stroke-linecap="round" transform="translate(92.0 31.3) rotate(330) scale(0.75)"/><circle cx="74.5" cy="23.2" r="5.0" fill="#F2A7A0" stroke="#C98A7E" stroke-width=".6"/><circle cx="78.2" cy="18.2" r="5.0" fill="#F2A7A0" stroke="#C98A7E" stroke-width=".6"/><circle cx="84.0" cy="20.2" r="5.0" fill="#F2A7A0" stroke="#C98A7E" stroke-width=".6"/><circle cx="83.9" cy="26.4" r="5.0" fill="#F2A7A0" stroke="#C98A7E" stroke-width=".6"/><circle cx="78.1" cy="28.2" r="5.0" fill="#F2A7A0" stroke="#C98A7E" stroke-width=".6"/><circle cx="79.7" cy="23.2" r="3.6" fill="#F3D37A" stroke="#C9A84A" stroke-width=".6"/><circle cx="67.7" cy="13.1" r="3.4" fill="#A9C3E8" stroke="#7F9BC6" stroke-width=".6"/><circle cx="67.9" cy="8.9" r="3.4" fill="#A9C3E8" stroke="#7F9BC6" stroke-width=".6"/><circle cx="71.9" cy="7.8" r="3.4" fill="#A9C3E8" stroke="#7F9BC6" stroke-width=".6"/><circle cx="74.2" cy="11.3" r="3.4" fill="#A9C3E8" stroke="#7F9BC6" stroke-width=".6"/><circle cx="71.6" cy="14.6" r="3.4" fill="#A9C3E8" stroke="#7F9BC6" stroke-width=".6"/><circle cx="70.7" cy="11.2" r="2.4" fill="#F3D37A" stroke="#C9A84A" stroke-width=".6"/><circle cx="89.9" cy="35.1" r="2.9" fill="#F6C96B" stroke="#C9A84A" stroke-width=".6"/><circle cx="93.4" cy="34.4" r="2.9" fill="#F6C96B" stroke="#C9A84A" stroke-width=".6"/><circle cx="95.1" cy="37.5" r="2.9" fill="#F6C96B" stroke="#C9A84A" stroke-width=".6"/><circle cx="92.7" cy="40.1" r="2.9" fill="#F6C96B" stroke="#C9A84A" stroke-width=".6"/><circle cx="89.4" cy="38.6" r="2.9" fill="#F6C96B" stroke="#C9A84A" stroke-width=".6"/><circle cx="92.1" cy="37.1" r="2.1" fill="#F2A7A0" stroke="#C9A84A" stroke-width=".6"/><circle cx="59.8" cy="4.0" r="1.4" fill="#F2A7A0"/><circle cx="92.4" cy="25.5" r="1.2" fill="#F6C96B"/><circle cx="96.9" cy="53.3" r="1.1" fill="#A9C3E8"/><path d="M0 0C3.4-4.4 10.4-4.8 15 0C10.4 4.8 3.4 4.4 0 0Z" fill="#8FBF8A" stroke="#5F8452" stroke-width=".8" transform="translate(24.8 82.3) rotate(40) scale(0.85)"/><path d="M1.5 0L12 0" stroke="#5F8452" stroke-width=".6" stroke-linecap="round" transform="translate(24.8 82.3) rotate(40) scale(0.85)"/><path d="M0 0C3.4-4.4 10.4-4.8 15 0C10.4 4.8 3.4 4.4 0 0Z" fill="#6E987C" stroke="#5F8452" stroke-width=".8" transform="translate(16.1 71.2) rotate(95) scale(0.75)"/><path d="M1.5 0L12 0" stroke="#5F8452" stroke-width=".6" stroke-linecap="round" transform="translate(16.1 71.2) rotate(95) scale(0.75)"/><circle cx="17.2" cy="75.9" r="2.6" fill="#F2A7A0" stroke="#C98A7E" stroke-width=".6"/><circle cx="20.4" cy="75.9" r="2.6" fill="#F2A7A0" stroke="#C98A7E" stroke-width=".6"/><circle cx="21.4" cy="79.0" r="2.6" fill="#F2A7A0" stroke="#C98A7E" stroke-width=".6"/><circle cx="18.8" cy="80.8" r="2.6" fill="#F2A7A0" stroke="#C98A7E" stroke-width=".6"/><circle cx="16.2" cy="78.9" r="2.6" fill="#F2A7A0" stroke="#C98A7E" stroke-width=".6"/><circle cx="18.8" cy="78.1" r="1.9" fill="#F3D37A" stroke="#C9A84A" stroke-width=".6"/><circle cx="28.4" cy="90.6" r="1.1" fill="#F6C96B"/></g></symbol>
+  </defs>
+</svg>
+
+
+  <!-- ====================== ĐĂNG NHẬP ====================== -->
+  <div class="gate" id="gate">
+    <div class="gate-card" id="gateLoading"><p class="gate-loading">Đang mở cửa sổ… 🍃</p></div>
+
+    <form class="gate-card" id="gateLogin" hidden>
+      <div class="gate-leaf" aria-hidden="true">🍃</div>
+      <h2>KOMOREBI</h2>
+      <p class="gate-sub" id="g-sub">Chào cưng, đăng nhập để đọc tiếp nhé</p>
+      <div class="field-group">
+        <label for="g-email">Email</label>
+        <input type="email" id="g-email" autocomplete="username" required>
+      </div>
+      <div class="field-group">
+        <label for="g-pass">Mật khẩu</label>
+        <div class="pass-wrap">
+          <input type="password" id="g-pass" autocomplete="current-password" required>
+          <button type="button" class="pass-toggle" id="passToggle">Hiện</button>
+        </div>
+      </div>
+      <div class="field-group" id="g-confirm-wrap" hidden>
+        <label for="g-confirm">Nhập lại mật khẩu</label>
+        <input type="password" id="g-confirm" autocomplete="new-password">
+      </div>
+      <p class="gate-err" id="g-err" role="alert"></p>
+      <button class="btn-submit primary" id="g-btn" type="submit">Vào đọc truyện</button>
+      <p class="gate-switch"><span id="g-switch-text">Chưa có tài khoản?</span> <button type="button" id="g-switch">Tạo tài khoản</button></p>
+      <p class="gate-ok" id="g-ok" role="status"></p>
+      <p class="gate-server" id="g-server"></p>
+    </form>
+
+    <div class="gate-card" id="gateConfig" hidden>
+      <div class="gate-leaf" aria-hidden="true">🔌</div>
+      <h2 style="font-size:1.6rem;letter-spacing:0">Chưa kết nối máy chủ</h2>
+      <p class="gate-sub" style="margin-bottom:0">Đặt file <b>config.js</b> (đã điền URL và anon key của Supabase) cạnh file index.html rồi tải lại trang.</p>
+    </div>
+  </div>
+
+  <div class="overlay" id="overlay"></div>
+  <div class="toast" id="toast" role="status"></div>
+
+  <!-- ====================== SIDE MENU ====================== -->
+  <aside class="side-menu" id="sideMenu" aria-label="Menu">
+    <div class="side-head">
+      <span class="logo">🍃 Komorebi</span>
+      <button class="side-close" onclick="toggleMenu(false)" aria-label="Đóng menu">×</button>
+    </div>
+    <a class="side-link" data-screen="home" onclick="goScreen('home')" title="Trang chủ"><span class="side-ic">🏠</span><span class="side-label">Trang chủ</span></a>
+    <a class="side-link" data-screen="library" onclick="goScreen('library')" title="Thư viện"><span class="side-ic">📚</span><span class="side-label">Thư viện</span></a>
+    <a class="side-link" data-screen="favorites" onclick="goScreen('favorites')" title="Yêu thích"><span class="side-ic">⭐</span><span class="side-label">Yêu thích</span></a>
+    <a class="side-link" data-screen="history" onclick="goScreen('history')" title="Lịch sử đọc"><span class="side-ic">🕘</span><span class="side-label">Lịch sử đọc</span></a>
+    <a class="side-link need-upload" data-screen="upload" onclick="goScreen('upload')" title="Upload"><span class="side-ic">📤</span><span class="side-label">Upload</span></a>
+    <a class="side-link need-upload" data-screen="master" onclick="goScreen('master')" title="Thể loại & tiến độ"><span class="side-ic">🏷️</span><span class="side-label">Thể loại &amp; tiến độ</span></a>
+    <a class="side-link" onclick="openSettings()" title="Cài đặt"><span class="side-ic">⚙️</span><span class="side-label">Cài đặt</span></a>
+    <div class="side-foot side-mode-wrap">
+      <span class="side-mode-label">Kiểu menu</span>
+      <div class="side-mode" role="group" aria-label="Kiểu hiển thị menu">
+        <button type="button" data-mode="full" title="Hiển thị đầy đủ"><span class="mi">📖</span><span class="mt">Đầy đủ</span></button>
+        <button type="button" data-mode="mini" title="Thu gọn"><span class="mi">📑</span><span class="mt">Thu gọn</span></button>
+        <button type="button" data-mode="hidden" title="Ẩn menu"><span class="mi">🙈</span><span class="mt">Ẩn</span></button>
+      </div>
+    </div>
+  </aside>
+
+  <nav>
+    <button class="hamburger" id="menuBtn" onclick="toggleMenu()" aria-label="Menu" title="Menu">
+      <svg viewBox="0 0 32 32" aria-hidden="true">
+        <path d="M5.5 9.6c4.2-1.4 9.6 1 15.2-.4 1.9-.4 3.6-.5 5.4-.1"/>
+        <path d="M5.8 16.3c3.8-1.2 7.6.9 11.6-.2"/>
+        <path d="M5.4 23c5-1.3 10.4.8 15.6-.5 1.6-.3 3.3-.4 5.2 0"/>
+        <path class="leaf" d="M20.2 16.4c1.4-3.3 5-4.6 7.6-3.6-.4 3.1-3.8 5.5-7.6 3.6z"/>
+      </svg>
+    </button>
+    <h1>KOMOREBI</h1>
+    <div class="nav-icons">
+      <button class="icon-btn" title="Tìm truyện" aria-label="Tìm truyện" onclick="openLibrarySearch()">
+        <svg class="doodle" viewBox="0 0 32 32" aria-hidden="true"><path class="fillable" d="M14.2 5.4c4.7-.5 8.6 2.9 8.7 7.6.2 4.6-3.4 8.4-8 8.5-4.7.2-8.6-3.3-8.7-7.9-.2-4.3 3.4-8 8-8.2z"/><path d="M10.4 11.2c.6-1.6 2-2.7 3.6-2.9"/><path d="M21 20.6c1.9 1.6 3.7 3.5 5.6 5.8"/></svg>
+      </button>
+      <div class="bell-area">
+        <button class="icon-btn" id="bellBtn" title="Thông báo" aria-label="Thông báo" aria-expanded="false" aria-controls="bellPanel">
+          <svg class="doodle" viewBox="0 0 32 32" aria-hidden="true"><path class="bell-body" d="M9.4 22.2c.4-3.1-.5-6.6.9-9.6 1.3-2.9 3.5-4.5 6-4.4 2.7.1 4.8 1.8 5.7 4.5 1 3.1.2 6.3 1.4 9.5-4.6.4-9.4.4-14 0z"/><path d="M6.4 22.5c6.4-.7 12.8-.8 19.3.1"/><path d="M13.8 25.4c.8 1.8 3.6 1.9 4.4-.2"/><path d="M15.9 8.2c0-1.2.1-2.3.3-3.4"/><path d="M12.6 12.4c.5-1.2 1.3-2 2.4-2.4"/></svg>
+          <span class="spark s1">✦</span><span class="spark s2">✦</span><span class="spark s3">✦</span>
+          <span class="badge" id="bellBadge" hidden></span>
+        </button>
+        <div class="bell-panel" id="bellPanel" hidden>
+          <div class="bell-head"><span>🔔 Thông báo</span><button type="button" class="link-btn" onclick="goScreen('favorites')">⭐ Truyện yêu thích</button></div>
+          <div class="bell-list" id="bellList"></div>
+        </div>
+      </div>
+      <button class="icon-btn star-btn" title="Truyện yêu thích" aria-label="Truyện yêu thích" onclick="goScreen('favorites')">
+        <svg class="doodle" viewBox="0 0 32 32" aria-hidden="true"><path class="fillable" d="M16.3 4.6c1.4 2.7 2.3 5.3 3.5 7.6 3 .3 5.6.6 8.3 1.3-2 2.1-4.1 3.9-6.2 5.8.6 2.8 1.1 5.6 1.5 8.4-2.5-1.3-4.8-2.8-7.2-4-2.4 1.3-4.6 2.7-7.1 4 .6-2.8 1.1-5.6 1.7-8.3-2-1.9-4-3.7-6-5.8 2.8-.6 5.5-.9 8.3-1.2 1.1-2.6 2-5.1 3.2-7.8z"/><path d="M12.4 14.4c.6-.3 1.3-.4 2-.4"/></svg>
+      </button>
+      <div class="user-area">
+        <span class="av-wrap"><svg class="wreath" aria-hidden="true"><use href="#wreath"/></svg><button class="avatar-circle" id="avatarBtn" onclick="toggleUserMenu()" aria-label="Tài khoản">
+          <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"/></svg>
+        </button></span>
+        <div class="user-dropdown" id="userDropdown">
+          <button type="button" class="dd-me" onclick="openProfile(false)" title="Xem trang cá nhân"><span class="av-wrap"><svg class="wreath" aria-hidden="true"><use href="#wreath"/></svg><span class="av" id="ddAv">🍃</span></span><span style="min-width:0"><b id="ddName">cưng</b><small id="userEmail"></small></span><span class="dd-go" aria-hidden="true">›</span></button>
+          <button type="button" onclick="goScreen('history')">🕘 Lịch sử đọc</button>
+          <button type="button" onclick="goScreen('favorites')">⭐ Truyện yêu thích</button>
+          <button class="logout" onclick="logout()">🚪 Đăng xuất</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ====================== HOME SCREEN ====================== -->
+  <div class="screen" id="screen-home">
+    <div class="home-page">
+      <section class="hero">
+        <h2>Chào cưng, hôm nay đọc gì nào?</h2>
+        <p id="heroSub">Những bộ truyện vừa được cập nhật trên kệ</p>
+        <div class="hero-wrap">
+          <button type="button" class="hero-arrow prev" data-hero="-1" aria-label="Lùi">❮</button>
+          <div class="hero-strip" id="heroStrip"></div>
+          <button type="button" class="hero-arrow next" data-hero="1" aria-label="Tiến">❯</button>
+        </div>
+      </section>
+      <section class="sec" id="secNew">
+        <div class="sec-head"><h3 class="sec-title">✨ Truyện mới cập nhật</h3><button type="button" class="link-btn" onclick="goScreen('library')">Xem thư viện ❯</button></div>
+        <div class="h-grid" id="homeNew"></div>
+        <div class="home-pager" id="homePager"></div>
+      </section>
+      <section class="sec" id="secDone">
+        <div class="sec-head"><h3 class="sec-title">🌸 Truyện đã hoàn thành</h3><button type="button" class="link-btn" id="seeDone">Xem tất cả ❯</button></div>
+        <div class="h-grid" id="homeDone"></div>
+      </section>
+    </div>
+  </div>
+
+  <!-- ====================== LIBRARY SCREEN ====================== -->
+  <div class="screen" id="screen-library">
+    <div class="lib-page">
+      <div class="lib-head">
+        <div>
+          <h2 class="lib-title">📚 Thư viện</h2>
+          <p class="lib-sub" id="libSub"></p>
+        </div>
+      </div>
+
+      <form class="lib-search" id="libSearchForm" role="search">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"/></svg>
+        <label class="sr-only" for="libSearch">Tìm truyện</label>
+        <input type="search" id="libSearch" placeholder="Tìm theo tên truyện, tác giả hoặc mô tả…" autocomplete="off" enterkeyhint="search">
+        <button type="button" class="lib-search-clear" id="libSearchClear" aria-label="Xoá tìm kiếm" hidden>×</button>
+        <button type="submit" class="search-btn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"/></svg><span>Tìm kiếm</span></button>
+      </form>
+
+      <div class="lib-tools">
+        <div class="tool"><span>Tiến độ</span><div id="fStatus"></div></div>
+        <div class="tool"><span>Thể loại</span><div id="fGenre"></div></div>
+        <label class="tool"><span>Sắp xếp</span>
+          <select class="pill-select" id="libSort">
+            <option value="new">Mới cập nhật</option>
+            <option value="az">Tên A → Z</option>
+            <option value="chap">Nhiều chương nhất</option>
+          </select>
+        </label>
+      </div>
+      <div class="lib-summary"><span id="filterSummary"></span><button type="button" class="link-btn" id="libReset">Bỏ hết bộ lọc</button></div>
+
+      <div class="manga-list" id="mangaList" aria-live="polite"></div>
+
+      <div class="pager" id="pager" hidden>
+        <span class="pager-info" id="pagerInfo"></span>
+        <div class="pager-pages" id="pagerPages"></div>
+        <label class="pager-size">Mỗi trang
+          <select class="sort-select" id="perPage">
+            <option value="5">5 truyện</option>
+            <option value="10" selected>10 truyện</option>
+            <option value="20">20 truyện</option>
+          </select>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================== DETAIL SCREEN ====================== -->
+  <div class="screen" id="screen-detail">
+    <div class="detail-page">
+      <div class="breadcrumb" id="detailCrumbs"></div>
+      <section class="detail-card">
+        <div class="detail-main">
+          <div class="detail-cover" id="dCover"></div>
+          <div>
+            <h2 class="detail-title" id="dTitle"></h2>
+            <dl class="facts" id="dFacts"></dl>
+            <div class="m-tags" id="dGenres"></div>
+            <div class="detail-actions">
+              <button type="button" class="btn-submit secondary fav-toggle" id="dFav" aria-pressed="false">☆ Yêu thích</button>
+              <button type="button" class="btn-submit primary" id="dReadFirst">📖 Đọc từ đầu</button>
+              <button type="button" class="btn-submit secondary" id="dReadLast">✨ Chương mới nhất</button>
+              <button type="button" class="btn-submit secondary need-upload" id="dAddChap">＋ Thêm chương</button>
+              <button type="button" class="btn-submit secondary need-upload" id="dEditChap">✏️ Sửa chương</button>
+              <button type="button" class="btn-submit secondary need-upload" id="dEditInfo">📝 Sửa truyện</button>
+            </div>
+          </div>
+        </div>
+        <div class="detail-desc"><h3>Giới thiệu</h3><p id="dDesc"></p></div>
+      </section>
+      <section class="detail-card">
+        <div class="ch-head">
+          <h3>📑 Danh sách chương <span class="ch-count" id="dChCount"></span></h3>
+          <button type="button" class="link-btn" id="chSort">Mới nhất trước</button>
+        </div>
+        <ul class="ch-list" id="chList"></ul>
+      </section>
+    </div>
+  </div>
+
+  <!-- ====================== READER SCREEN ====================== -->
+  <div class="screen" id="screen-reader">
+    <div class="breadcrumb-container"><div class="breadcrumb" id="readerCrumbs"></div></div>
+    <main id="readerMain">
+      <header>
+        <h2 id="readerTitle"></h2>
+        <p class="update-date" id="readerDate"></p>
+        <div class="chapter-nav" id="navTop"></div>
+      </header>
+      <div class="viewer-wrap" id="viewerWrap"><div class="viewer" id="viewer"></div><button type="button" class="read-hint" id="readHint" hidden></button></div>
+      <div class="chapter-nav bottom" id="navBottom"></div>
+    </main>
+    <div class="reader-empty" id="readerEmpty" hidden>
+      <div class="big">📖</div>
+      <h3>Chưa có chương nào đang đọc</h3>
+      <p>Vào thư viện chọn một bộ truyện để bắt đầu nhé.</p>
+      <button type="button" class="btn-submit primary" onclick="goScreen('library')">Mở thư viện</button>
+    </div>
+  </div>
+
+  <!-- ====================== FAVORITES SCREEN ====================== -->
+  <div class="screen" id="screen-favorites">
+    <div class="home-page">
+      <div class="lib-head"><div><h2 class="lib-title">⭐ Truyện yêu thích</h2><p class="lib-sub" id="favSub"></p></div></div>
+      <div class="h-grid" id="favGrid"></div>
+    </div>
+  </div>
+
+  <!-- ====================== HISTORY SCREEN ====================== -->
+  <div class="screen" id="screen-history">
+    <div class="set-page">
+      <div class="lib-head">
+        <div><h2 class="lib-title">🕘 Lịch sử đọc</h2><p class="lib-sub" id="histSub"></p></div>
+        <button type="button" class="btn-submit danger" id="histClear">🧹 Xoá lịch sử</button>
+      </div>
+      <div class="hist-filter">
+        <label class="hf-date" id="hfDateWrap"><span>📅 Lọc theo ngày đọc</span><input type="date" id="histDate"></label>
+        <div class="hf-quick" role="group" aria-label="Chọn nhanh">
+          <button type="button" data-hq="all" aria-pressed="true">Tất cả</button>
+          <button type="button" data-hq="today" aria-pressed="false">Hôm nay</button>
+          <button type="button" data-hq="yday" aria-pressed="false">Hôm qua</button>
+        </div>
+      </div>
+      <div id="histBox"></div>
+    </div>
+  </div>
+
+  <!-- ====================== PROFILE SCREEN ====================== -->
+  <div class="screen" id="screen-profile">
+    <div class="set-page">
+      <div class="lib-head"><div><h2 class="lib-title">👤 Trang cá nhân</h2><p class="lib-sub">Chỉ mình cưng nhìn thấy trang này</p></div></div>
+      <section class="upload-card" id="pfView">
+        <div class="pf-card">
+          <div class="av-wrap lg"><svg class="wreath" aria-hidden="true"><use href="#wreath"/></svg><div class="pf-av" id="pfAv">🍃</div></div>
+          <div>
+            <h3 class="pf-name" id="pfName"></h3>
+            <p class="pf-mail" id="pfMail"></p>
+            <div class="pf-facts" id="pfFacts"></div>
+            <p class="pf-bio" id="pfBio"></p>
+            <div class="pf-actions">
+              <button type="button" class="btn-submit primary" onclick="openProfile(true)">✏️ Chỉnh sửa hồ sơ</button>
+              <button type="button" class="btn-submit secondary" id="pfPassBtn">🔑 Đổi mật khẩu</button>
+            </div>
+            <form class="pf-pass" id="pfPassForm" hidden>
+              <h4>🔑 Đổi mật khẩu</h4>
+              <div class="field-group"><label for="pfOldPass">Mật khẩu hiện tại</label><input type="password" id="pfOldPass" autocomplete="current-password" required></div>
+              <div class="field-group"><label for="pfNewPass">Mật khẩu mới</label><input type="password" id="pfNewPass" autocomplete="new-password" minlength="6" required></div>
+              <div class="field-group"><label for="pfNewPass2">Nhập lại mật khẩu mới</label><input type="password" id="pfNewPass2" autocomplete="new-password" minlength="6" required></div>
+              <p class="gate-err" id="pfPassErr" role="alert"></p>
+              <div class="up-actions" style="margin-top:.4rem">
+                <button type="button" class="btn-submit secondary" id="pfPassCancel">Huỷ</button>
+                <button type="submit" class="btn-submit primary" id="pfPassSave">💾 Lưu mật khẩu mới</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+      <form class="upload-card" id="pfEdit" hidden>
+        <h3>✏️ Chỉnh sửa hồ sơ</h3>
+        <div class="pf-card">
+          <div class="pf-edit-av">
+            <div class="av-wrap lg"><svg class="wreath" aria-hidden="true"><use href="#wreath"/></svg><label class="pf-av" id="pfEditAv" for="pfAvInput" title="Đổi ảnh đại diện">🍃</label></div>
+            <input type="file" id="pfAvInput" accept="image/*">
+            <button type="button" class="link-btn" id="pfAvRemove">Bỏ ảnh đại diện</button>
+          </div>
+          <div>
+            <div class="field-group"><label for="pfNameIn">Tên hiển thị</label><input type="text" id="pfNameIn" maxlength="40" placeholder="VD: Trang Nhung"></div>
+            <div class="field-group"><label for="pfBday">Ngày sinh</label><input type="date" id="pfBday"></div>
+            <div class="field-group"><label for="pfBioIn">Giới thiệu</label><textarea id="pfBioIn" maxlength="300" placeholder="Đôi dòng về cưng, gu truyện yêu thích…"></textarea><div class="pf-count" id="pfBioCount">0/300</div></div>
+            <div class="upload-progress" id="progPf"><div class="progress-bar-wrap"><div class="progress-bar-fill"></div></div><div class="progress-label"></div></div>
+            <div class="up-actions">
+              <button type="button" class="btn-submit secondary" id="pfCancel">Huỷ</button>
+              <button type="submit" class="btn-submit primary" id="pfSave">💾 Lưu hồ sơ</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ====================== MASTER SCREEN ====================== -->
+  <div class="screen" id="screen-master">
+    <div class="ms-page">
+      <div class="lib-head">
+        <div>
+          <h2 class="lib-title">🏷️ Thể loại &amp; tiến độ</h2>
+          <p class="lib-sub">Thêm, đổi tên, sắp xếp hoặc xoá các lựa chọn dùng cho truyện</p>
+        </div>
+      </div>
+      <div class="ms-grid">
+        <section class="upload-card ms-card">
+          <h3>🎨 Thể loại <small id="msGenreCount"></small></h3>
+          <form class="ms-add" id="msGenreForm">
+            <input type="text" id="msGenreName" placeholder="Tên thể loại mới, VD: Học đường" maxlength="40" autocomplete="off">
+            <button type="submit" class="btn-submit primary">＋ Thêm</button>
+          </form>
+          <ul class="ms-list" id="msGenres"></ul>
+          <p class="ms-note">Đổi tên một thể loại sẽ tự đổi theo ở mọi truyện đang dùng nó. Xoá thể loại sẽ gỡ nó khỏi các truyện, truyện vẫn còn nguyên.</p>
+        </section>
+        <section class="upload-card ms-card">
+          <h3>📊 Tiến độ <small id="msStatusCount"></small></h3>
+          <form class="ms-add" id="msStatusForm">
+            <input type="text" id="msStatusName" placeholder="Tên tiến độ mới, VD: Hết season 3" maxlength="30" autocomplete="off">
+            <div class="tone-pick" id="msStatusTone" role="radiogroup" aria-label="Màu nhãn"></div>
+            <button type="submit" class="btn-submit primary">＋ Thêm</button>
+          </form>
+          <ul class="ms-list" id="msStatuses"></ul>
+          <p class="ms-note">Tiến độ đứng đầu danh sách là lựa chọn mặc định khi tạo truyện mới. Khi xoá một tiến độ đang được dùng, cưng sẽ chọn tiến độ thay thế cho các truyện đó.</p>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================== UPLOAD SCREEN ====================== -->
+  <div class="screen" id="screen-upload">
+    <div class="upload-page">
+      <div class="up-head">
+        <h2 class="upload-page-title">📤 Upload</h2>
+        <div class="seg" role="tablist" aria-label="Kiểu upload">
+          <button type="button" role="tab" class="seg-btn" data-tab="new" aria-selected="true">✨ Tạo truyện mới</button>
+          <button type="button" role="tab" class="seg-btn" data-tab="old" aria-selected="false">📚 Truyện đã có</button>
+        </div>
+      </div>
+
+      <!-- ===== Tab: tạo truyện mới ===== -->
+      <div id="paneNew" role="tabpanel">
+        <div class="upload-grid">
+          <div class="upload-card">
+            <h3>📝 Thông tin truyện</h3>
+            <div class="field-group">
+              <label for="title">Tên truyện *</label>
+              <input type="text" id="title" placeholder="VD: The Deep Sea" autocomplete="off" />
+            </div>
+            <div class="existing-note" id="existingNote"></div>
+            <div class="field-group">
+              <label for="author">Tác giả *</label>
+              <input type="text" id="author" placeholder="Tên tác giả" />
+            </div>
+            <div class="field-group">
+              <label for="translator">Người dịch</label>
+              <input type="text" id="translator" placeholder="Nhóm dịch hoặc người dịch" />
+            </div>
+            <div class="field-group">
+              <label for="release">Ngày phát hành</label>
+              <input type="date" id="release" />
+            </div>
+            <div class="field-group">
+              <label for="desc">Mô tả</label>
+              <textarea id="desc" placeholder="Tóm tắt nội dung truyện..."></textarea>
+            </div>
+          </div>
+
+          <div class="upload-col">
+            <div class="upload-card">
+              <h3>🖼️ Ảnh bìa</h3>
+              <div class="cover-dropzone" id="coverDropzone"
+                   ondragover="handleDragOver(event, this)" ondragleave="handleDragLeave(this)" ondrop="handleCoverDrop(event)">
+                <input type="file" id="coverInput" accept="image/*" onchange="handleCoverSelect(event)" aria-label="Chọn ảnh bìa" />
+                <img class="cover-preview" id="coverPreview" src="" alt="Xem trước ảnh bìa" />
+                <div class="dz-icon" id="coverIcon">🖼️</div>
+                <div class="dz-text" id="coverText">Kéo thả hoặc nhấp để chọn ảnh bìa<br><small>PNG, JPG, WEBP</small></div>
+              </div>
+            </div>
+            <div class="upload-card">
+              <h3>🏷️ Phân loại</h3>
+              <div class="class-row">
+                <div class="field-group" style="margin:0"><span class="field-label">Tiến độ</span><div id="upStatus"></div></div>
+                <div class="field-group" style="margin:0"><span class="field-label">Thể loại</span><div id="upGenres"></div></div>
+              </div>
+              <div class="chosen" id="upChosen"></div>
+            </div>
+          </div>
+
+          <div class="upload-card col-span-2">
+            <h3>📄 Chương đầu tiên <small style="font-size:.9rem;color:var(--mau-nau-nhat);font-family:'EB Garamond',serif">(có thể để trống, thêm sau cũng được)</small></h3>
+            <div class="field-row">
+              <div class="field-group">
+                <label for="chapNum">Chương số</label>
+                <input type="number" id="chapNum" min="0" step="0.5" inputmode="decimal" placeholder="1" />
+              </div>
+              <div class="field-group">
+                <label for="chapTitle">Tên chương</label>
+                <input type="text" id="chapTitle" placeholder="VD: Hoa biếc" />
+              </div>
+            </div>
+            <span class="field-label">Ảnh trang truyện</span>
+            <div class="pages-dropzone" data-set="new"
+                 ondragover="handleDragOver(event, this)" ondragleave="handleDragLeave(this)" ondrop="handlePagesDrop(event, this)">
+              <input type="file" accept="image/*" multiple data-set="new" onchange="handlePagesSelect(event)" aria-label="Chọn trang truyện" />
+              <div class="dz-icon">📄</div>
+              <div class="dz-text">Kéo thả ảnh vào đây hoặc nhấp để chọn<br><small>JPG / PNG / WebP · tối đa 500 trang · ảnh được tự nén nhẹ</small></div>
+            </div>
+            <div class="thumbs-head" data-head="new"></div>
+            <div class="thumb-grid" id="thumbsNew"></div>
+            <div class="upload-progress" id="progNew">
+              <div class="progress-bar-wrap"><div class="progress-bar-fill"></div></div>
+              <div class="progress-label"></div>
+            </div>
+          </div>
+
+          <div class="submit-row">
+            <button class="btn-submit secondary" onclick="goScreen('library')">Hủy</button>
+            <button class="btn-submit primary" id="submitNew" onclick="publishNew()">🚀 Đăng tải ngay</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== Tab: truyện đã có ===== -->
+      <div id="paneOld" role="tabpanel" hidden>
+        <div class="old-grid">
+          <section class="upload-card pick-col">
+            <div class="step-tag"><span>1</span> Chọn truyện</div>
+            <label class="lib-search small-search">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"/></svg>
+              <span class="sr-only">Tìm tên truyện</span>
+              <input type="search" id="pickSearch" placeholder="Tìm tên truyện…" autocomplete="off">
+            </label>
+            <div class="pick-list" id="pickList" role="listbox" aria-label="Danh sách truyện"></div>
+          </section>
+
+          <section class="upload-card" id="oldRight">
+            <div class="old-empty" id="oldEmpty">
+              <div class="big">👈</div>
+              <h3>Chọn một bộ truyện để bắt đầu</h3>
+              <p>Chọn truyện ở danh sách bên cạnh, rồi chọn đăng chương mới hoặc sửa chương cũ.</p>
+            </div>
+
+            <div id="oldFlow" hidden>
+              <div class="picked" id="pickedInfo"></div>
+
+              <div class="step-tag"><span>2</span> Chọn việc cần làm</div>
+              <div class="act-grid">
+                <button type="button" class="act-card" data-act="next" aria-pressed="true">
+                  <span class="act-ic">➕</span>
+                  <span class="act-txt"><b>Đăng chương tiếp theo</b><small id="actNextHint"></small></span>
+                </button>
+                <button type="button" class="act-card" data-act="edit" aria-pressed="false">
+                  <span class="act-ic">✏️</span>
+                  <span class="act-txt"><b>Sửa chương cũ</b><small>Chọn chương đã đăng để thay, thêm hoặc sắp xếp lại ảnh</small></span>
+                </button>
+                <button type="button" class="act-card" data-act="info" aria-pressed="false">
+                  <span class="act-ic">📝</span>
+                  <span class="act-txt"><b>Sửa thông tin truyện</b><small>Đổi tên, tác giả, bìa, tiến độ, thể loại, mô tả</small></span>
+                </button>
+              </div>
+
+              <div id="chapPicker" hidden>
+                <p class="warn-note">⚠️ Thay đổi sẽ được áp dụng cho chương ngay khi cưng bấm lưu.</p>
+                <span class="field-label">Chọn chương cần sửa</span>
+                <div class="chap-pick" id="chapPick"></div>
+              </div>
+
+              <div id="step3">
+                <div class="step-tag"><span>3</span> <span id="step3Title">Upload ảnh</span></div>
+                <div class="field-row3">
+                  <div class="field-group">
+                    <label for="oldNum">Số chương</label>
+                    <input type="number" id="oldNum" min="0" step="0.5" inputmode="decimal" />
+                  </div>
+                  <div class="field-group">
+                    <label for="oldTitle">Tên chương</label>
+                    <input type="text" id="oldTitle" placeholder="VD: Bão lửa thứ hai…" />
+                  </div>
+                  <div class="field-group">
+                    <label for="oldMode">Chế độ xem <span class="soon">sắp có</span></label>
+                    <select id="oldMode" disabled><option>Công khai</option></select>
+                  </div>
+                </div>
+                <span class="field-label">Ảnh trang truyện</span>
+                <div class="pages-dropzone compact" data-set="old"
+                     ondragover="handleDragOver(event, this)" ondragleave="handleDragLeave(this)" ondrop="handlePagesDrop(event, this)">
+                  <input type="file" accept="image/*" multiple data-set="old" onchange="handlePagesSelect(event)" aria-label="Chọn trang truyện" />
+                  <div class="dz-icon">⤴️</div>
+                  <div class="dz-text">Kéo thả ảnh vào đây hoặc nhấp để chọn<br><small>JPG / PNG / WebP · tối đa 500 trang · ảnh được tự nén nhẹ</small></div>
+                </div>
+                <div class="thumbs-head" data-head="old"></div>
+                <div class="thumb-grid" id="thumbsOld"></div>
+                <div class="upload-progress" id="progOld">
+                  <div class="progress-bar-wrap"><div class="progress-bar-fill"></div></div>
+                  <div class="progress-label"></div>
+                </div>
+                <div class="up-actions">
+                  <button type="button" class="btn-submit danger" id="delChap" hidden>🗑️ Xoá chương</button>
+                  <span class="spacer"></span>
+                  <button type="button" class="btn-submit secondary" aria-disabled="true">💾 Lưu nháp <span class="soon">sắp có</span></button>
+                  <button type="button" class="btn-submit secondary" aria-disabled="true">⏰ Lên lịch ▾ <span class="soon">sắp có</span></button>
+                  <button type="button" class="btn-submit primary" id="submitOld" onclick="publishOld()">🚀 Xuất bản ngay</button>
+                </div>
+              </div>
+              <div id="infoForm" hidden>
+                <div class="step-tag"><span>3</span> Sửa thông tin truyện</div>
+                <div class="info-grid">
+                  <div>
+                    <div class="field-group"><label for="eTitle">Tên truyện *</label><input type="text" id="eTitle" autocomplete="off"></div>
+                    <div class="field-group"><label for="eAuthor">Tác giả *</label><input type="text" id="eAuthor"></div>
+                    <div class="field-row">
+                      <div class="field-group"><label for="eRelease">Ngày phát hành</label><input type="date" id="eRelease"></div>
+                      <div class="field-group"><label for="eTranslator">Người dịch</label><input type="text" id="eTranslator"></div>
+                    </div>
+                    <div class="class-row" style="margin-bottom:1rem">
+                      <div class="field-group" style="margin:0"><span class="field-label">Tiến độ</span><div id="eStatus"></div></div>
+                      <div class="field-group" style="margin:0"><span class="field-label">Thể loại</span><div id="eGenres"></div></div>
+                    </div>
+                    <div class="chosen" id="eChosen" style="margin:-4px 0 1rem"></div>
+                    <div class="field-group"><label for="eDesc">Mô tả</label><textarea id="eDesc"></textarea></div>
+                  </div>
+                  <div class="info-cover">
+                    <span class="field-label">Ảnh bìa</span>
+                    <div class="cover-dropzone" id="eCoverZone" ondragover="handleDragOver(event, this)" ondragleave="handleDragLeave(this)" ondrop="handleECoverDrop(event)">
+                      <input type="file" id="eCoverInput" accept="image/*" aria-label="Đổi ảnh bìa">
+                      <img class="cover-preview" id="eCoverPreview" src="" alt="Ảnh bìa">
+                      <div class="dz-icon" id="eCoverIcon">🖼️</div>
+                      <div class="dz-text" id="eCoverText">Nhấp để chọn ảnh bìa</div>
+                    </div>
+                    <small>Nhấp vào bìa để thay ảnh khác</small>
+                  </div>
+                </div>
+                <div class="upload-progress" id="progInfo">
+                  <div class="progress-bar-wrap"><div class="progress-bar-fill"></div></div>
+                  <div class="progress-label"></div>
+                </div>
+                <div class="up-actions">
+                  <button type="button" class="btn-submit danger" id="delManga">🗑️ Xoá truyện</button>
+                  <span class="spacer"></span>
+                  <button type="button" class="btn-submit secondary" id="resetInfo">↺ Hoàn tác</button>
+                  <button type="button" class="btn-submit primary" id="saveInfo">💾 Lưu thông tin truyện</button>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <dialog class="kdlg" id="kdlg">
+    <form method="dialog">
+      <h3 id="kdlgTitle"></h3>
+      <div class="kbody" id="kdlgBody"></div>
+      <div class="kfoot">
+        <button type="button" class="btn-submit secondary" id="kdlgNo">Huỷ</button>
+        <button type="button" class="btn-submit primary" id="kdlgYes">Đồng ý</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog class="kdlg pv-dlg" id="pvDlg" aria-labelledby="pvTitle">
+    <div class="pv-head">
+      <div class="pv-headl"><img class="pv-cover" id="pvCover" alt="" hidden><div><h3 id="pvTitle"></h3><p id="pvSub"></p></div></div>
+      <button type="button" class="side-close" id="pvX" aria-label="Đóng xem trước">×</button>
+    </div>
+    <div class="pv-tools">
+      <span class="pv-tip">👀 Xem lại thứ tự trang trước khi đăng nhé</span>
+      <div class="seg" role="group" aria-label="Kiểu xem">
+        <button type="button" class="seg-btn" data-pv="grid">▦ Lưới</button>
+        <button type="button" class="seg-btn" data-pv="strip">▤ Đọc thử</button>
+      </div>
+    </div>
+    <div class="pv-body" id="pvBody"></div>
+    <div class="kfoot">
+      <button type="button" class="btn-submit secondary" id="pvBack">↩ Sắp xếp lại</button>
+      <button type="button" class="btn-submit primary" id="pvOk">🚀 Xác nhận đăng</button>
+    </div>
+  </dialog>
+
+  <dialog class="kdlg set-dlg" id="setDlg" aria-labelledby="setDlgTitle">
+    <div class="pv-head"><div><h3 id="setDlgTitle">⚙️ Cài đặt</h3><p>Áp dụng ngay, không làm mất trang cưng đang xem</p></div><button type="button" class="side-close" onclick="closeSettings()" aria-label="Đóng cài đặt">×</button></div>
+    <div class="set-body">
+      <section class="upload-card">
+        <h3>🌗 Giao diện sáng / tối</h3>
+        <p class="set-sub">Chọn cách hiển thị cho dịu mắt nhất với cưng.</p>
+        <div class="theme-grid" role="radiogroup" aria-label="Chế độ hiển thị">
+          <button type="button" class="theme-opt" role="radio" data-theme-opt="system" aria-checked="false">
+            <span class="theme-prev auto"><span class="pl"><i></i><u></u><u></u></span><span class="pd"><i></i><u></u><u></u></span></span>
+            <b>💻 Theo thiết bị</b><small>Tự đổi sáng hoặc tối theo cài đặt của máy</small>
+          </button>
+          <button type="button" class="theme-opt" role="radio" data-theme-opt="light" aria-checked="false">
+            <span class="theme-prev"><span class="pl"><i></i><u></u><u></u></span></span>
+            <b>☀️ Sáng</b><small>Nền giấy kem, dịu mắt ban ngày</small>
+          </button>
+          <button type="button" class="theme-opt" role="radio" data-theme-opt="dark" aria-checked="false">
+            <span class="theme-prev"><span class="pd"><i></i><u></u><u></u></span></span>
+            <b>🌙 Tối</b><small>Nền xanh rêu tối, đọc đêm đỡ chói</small>
+          </button>
+        </div>
+        <p class="set-now" id="themeNow"></p>
+      </section>
+    </div>
+  </dialog>
+
+  <!-- FLOAT BUTTONS -->
+  <div class="read-pop" id="readPop" hidden>
+    <h4>📖 Bố cục truyện <button type="button" class="side-close" onclick="toggleReadPop(false)" aria-label="Đóng" style="width:30px;height:30px">×</button></h4>
+    <div class="rp-opts" role="radiogroup" aria-label="Bố cục truyện">
+      <button type="button" class="rp-opt" role="radio" data-read-opt="v" aria-checked="false"><span class="ic">⬇️</span><span><b>Cuộn dọc</b><small>Các trang nối liền thành một dải dài</small></span></button>
+      <button type="button" class="rp-opt" role="radio" data-read-opt="h" aria-checked="false"><span class="ic">↔️</span><span><b>Lật ngang</b><small>Máy tính 2 trang như sách · điện thoại một dải ngang</small></span></button>
+    </div>
+    <div id="readDirRow">
+      <span class="field-label">Chiều lật trang</span>
+      <div class="seg" role="radiogroup" aria-label="Chiều lật trang">
+        <button type="button" class="seg-btn" data-dir-opt="ltr" role="radio">Trái → Phải</button>
+        <button type="button" class="seg-btn" data-dir-opt="rtl" role="radio">Phải → Trái (manga)</button>
+      </div>
+    </div>
+  </div>
+  <div class="float-btns">
+    <button onclick="window.scrollTo({top:0,behavior:'smooth'})" class="btn-float btn-page-up" title="Lên đầu trang" aria-label="Lên đầu trang">
+      <div class="icon-up"></div>
+    </button>
+    <button type="button" class="btn-float btn-read-set" id="readSetBtn" onclick="toggleReadPop()" title="Bố cục truyện" aria-label="Bố cục truyện" aria-expanded="false" aria-controls="readPop">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 10.4c3.1-.1 5.6 2.3 5.6 5.4.1 3.1-2.4 5.7-5.5 5.7-3.1.1-5.6-2.4-5.7-5.5 0-3 2.5-5.5 5.6-5.6z"/><path d="M16 4.6v3.2M16.2 24.3v3.1M4.6 15.9h3.2M24.3 16.1h3.1M7.8 8l2.3 2.2M21.9 21.8l2.3 2.3M8 24.1l2.2-2.3M21.8 10.1l2.3-2.2"/></svg>
+    </button>
+    <button class="btn-float btn-bug" title="Báo lỗi (sắp có)" aria-disabled="true" tabindex="-1">
+      <span class="bug-text">Báo lỗi</span>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M20,8H17.19C16.74,7.22 16.12,6.55 15.37,6.04L17,4.41L15.59,3L13.42,5.17C12.96,5.06 12.49,5 12,5C11.51,5 11.04,5.06 10.58,5.17L8.41,3L7,4.41L8.62,6.04C7.88,6.55 7.26,7.22 6.81,8H4V10H6.09C6.04,10.33 6,10.66 6,11V12H4V14H6V15C6,15.34 6.04,15.67 6.09,16H4V18H6.81C7.85,19.23 9.34,20 11,20V22H13V20C14.66,20 16.15,19.23 17.19,18H20V16H17.91C17.96,15.67 18,15.34 18,15V14H20V12H18V11C18,10.66 17.96,10.33 17.91,10H20V8M14,16H10V14H14V16M14,12H10V10H14V12Z"/></svg>
+    </button>
+  </div>
+
+<!-- Mã nguồn được tách theo từng chức năng, thứ tự nạp quan trọng -->
+<script src="/js/01-auth.js"></script>
+<script src="/js/02-core.js"></script>
+<script src="/js/03-navigation.js"></script>
+<script src="/js/04-pulldown.js"></script>
+<script src="/js/05-home.js"></script>
+<script src="/js/06-library.js"></script>
+<script src="/js/07-detail.js"></script>
+<script src="/js/08-reader.js"></script>
+<script src="/js/09-upload.js"></script>
+<script src="/js/10-header-autohide.js"></script>
+<script src="/js/11-router.js"></script>
+<script src="/js/12-roles.js"></script>
+<script src="/js/13-password.js"></script>
+<script src="/js/14-publish-preview.js"></script>
+<script src="/js/15-master-data.js"></script>
+<script src="/js/16-theme.js"></script>
+<script src="/js/17-edit-manga.js"></script>
+<script src="/js/18-user.js"></script>
+<script src="/js/19-reading-layout.js"></script>
+<script src="/js/99-boot.js"></script>
+
+</body>
+</html>

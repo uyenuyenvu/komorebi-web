@@ -1,0 +1,9 @@
+/* ===== v24: trạng thái tải từng ảnh ===== */
+.thumb .t-state { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-size: 1rem; background: rgba(255,253,248,.92); box-shadow: 1px 2px 0 var(--bong); color: var(--mau-nau); }
+.thumb .t-state.ok { background: var(--mau-xanh); color: #fff; font-weight: bold; }
+.thumb .t-state.fail { background: #C47F78; color: #fff; font-family: 'Patrick Hand', cursive; font-size: 1.2rem; }
+.thumb.is-busy img { opacity: .55; }
+.thumb.is-busy .t-state { animation: spinSoft 1.2s linear infinite; }
+.thumb.is-fail { border-color: #C47F78; }
+.thumb.is-done { border-color: var(--mau-xanh); }
+@keyframes spinSoft { to { transform: translate(-50%, -50%) rotate(360deg); } }
