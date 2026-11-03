@@ -21,8 +21,8 @@
 .read-grid { grid-template-columns: repeat(2, 1fr); }
 @media (max-width: 680px) {
   .read-grid { grid-template-columns: 1fr; }
-  #readDirRow .seg { display: grid; grid-template-columns: 1fr; width: 100%; }
-  #readDirRow .seg-btn { white-space: normal; }
+  .read-dir-row .seg, #readDirRow .seg { display: grid; grid-template-columns: 1fr; width: 100%; }
+  .read-dir-row .seg-btn, #readDirRow .seg-btn { white-space: normal; }
 }
 
 /* phân quyền */
