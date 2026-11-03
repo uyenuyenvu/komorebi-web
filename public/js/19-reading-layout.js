@@ -6,10 +6,28 @@ const layoutNow = () => READ.mode === 'h' ? (wideScreen.matches ? 'spread' : 'st
 function renderReadOpts() {
   document.querySelectorAll('[data-read-opt]').forEach(b => b.setAttribute('aria-checked', b.dataset.readOpt === READ.mode));
   document.querySelectorAll('[data-dir-opt]').forEach(b => b.setAttribute('aria-selected', b.dataset.dirOpt === READ.dir));
-  $('readDirRow').hidden = READ.mode !== 'h';
+  document.querySelectorAll('.read-dir-row').forEach(el => { el.hidden = READ.mode !== 'h'; });
 }
-document.querySelectorAll('[data-read-opt]').forEach(b => b.addEventListener('click', () => { if (READ.mode === b.dataset.readOpt) return; const at = currentPageIndex(); READ.mode = b.dataset.readOpt; try { localStorage.setItem('komorebi.readMode', READ.mode); } catch (e) {} renderReadOpts(); relayout(at); }));
-document.querySelectorAll('[data-dir-opt]').forEach(b => b.addEventListener('click', () => { if (READ.dir === b.dataset.dirOpt) return; const at = currentPageIndex(); READ.dir = b.dataset.dirOpt; try { localStorage.setItem('komorebi.readDir', READ.dir); } catch (e) {} renderReadOpts(); relayout(at); }));
+function saveReadMode(mode) {
+  if (READ.mode === mode) return;
+  const at = currentPageIndex();
+  READ.mode = mode;
+  try { localStorage.setItem('komorebi.readMode', READ.mode); } catch (e) {}
+  renderReadOpts();
+  relayout(at);
+  showToast(READ.mode === 'h' ? '↔️ Đã chuyển sang lật ngang' : '⬇️ Đã chuyển sang cuộn dọc');
+}
+function saveReadDir(dir) {
+  if (READ.dir === dir) return;
+  const at = currentPageIndex();
+  READ.dir = dir;
+  try { localStorage.setItem('komorebi.readDir', READ.dir); } catch (e) {}
+  renderReadOpts();
+  relayout(at);
+  showToast(READ.dir === 'rtl' ? '📖 Chiều lật: Phải → Trái (manga)' : '📖 Chiều lật: Trái → Phải');
+}
+document.querySelectorAll('[data-read-opt]').forEach(b => b.addEventListener('click', () => saveReadMode(b.dataset.readOpt)));
+document.querySelectorAll('[data-dir-opt]').forEach(b => b.addEventListener('click', () => saveReadDir(b.dataset.dirOpt)));
 function currentPageIndex() {
   if (STATE.screen !== 'reader' || !READ.urls.length) return 0;
   if (READ.layout === 'spread') return READ.page * 2;
@@ -36,9 +54,20 @@ function toggleReadPop(force) {
   p.hidden = !open; $('readSetBtn').setAttribute('aria-expanded', open); if (open) renderReadOpts();
 }
 document.addEventListener('click', e => { if (!e.target.closest('#readPop') && !e.target.closest('#readSetBtn')) toggleReadPop(false); });
-function openSettings() { closeDrawer(); renderThemeOpts(); $('setDlg').showModal(); }
-function closeSettings() { $('setDlg').close(); }
-$('setDlg').addEventListener('click', e => { if (e.target === $('setDlg')) closeSettings(); });
+function openSettings() {
+  closeDrawer();
+  if (typeof toggleReadPop === 'function') toggleReadPop(false);
+  renderThemeOpts();
+  renderReadOpts();
+  const dlg = $real('setDlg') || $('setDlg');
+  if (dlg && dlg.showModal) dlg.showModal();
+}
+function closeSettings() {
+  const dlg = $real('setDlg') || $('setDlg');
+  if (dlg && dlg.close) dlg.close();
+}
+const _setDlg = $real('setDlg');
+if (_setDlg) _setDlg.addEventListener('click', e => { if (e.target === _setDlg) closeSettings(); });
 renderReadOpts();
 
 function renderPages(urls) {
