@@ -1,0 +1,118 @@
+/* ===== v21 ===== */
+/* trang truyện nối liền */
+.viewer img, .viewer img:last-child { border-bottom: 0 !important; margin: 0; }
+.viewer img { display: block; }
+.viewer-wrap { position: relative; }
+
+/* lật ngang trên máy tính: 2 trang như sách */
+#readerMain.wide { max-width: 1240px; }
+.viewer.spread-mode { display: block; background: var(--viewer); position: relative; user-select: none; }
+.spread { display: flex; justify-content: center; align-items: center; height: calc(100vh - var(--nav-h) - 74px); min-height: 380px; }
+.spread.rtl { flex-direction: row-reverse; }
+.spread img { height: 100%; width: auto; max-width: 50%; object-fit: contain; min-height: 0; background: transparent; }
+.spread img:only-child { max-width: 100%; }
+.spread.single { gap: 0; }
+.flip-zone { position: absolute; top: 0; bottom: 0; width: 50%; border: 0; background: transparent; cursor: pointer; z-index: 2; display: flex; align-items: center; padding: 0 14px; }
+.flip-zone.left { left: 0; justify-content: flex-start; } .flip-zone.right { right: 0; justify-content: flex-end; }
+.flip-zone span { width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; background: var(--mau-giay); color: var(--mau-xanh-dam); border: 2px solid var(--mau-net); box-shadow: 2px 3px 0 var(--bong); opacity: 0; transition: opacity .2s; font-size: 1.1rem; }
+.flip-zone:hover span, .flip-zone:focus-visible span { opacity: 1; }
+.flip-zone:disabled { cursor: default; } .flip-zone:disabled span { display: none; }
+.spread-bar { display: flex; align-items: center; justify-content: center; gap: 14px; padding: 8px 12px 10px; font-family: 'Patrick Hand', cursive; color: var(--mau-nau-nhat); font-size: 1.05rem; background: var(--mau-giay); border-top: 2px dashed var(--mau-net); }
+.spread-bar input[type="range"] { width: min(320px, 40vw); accent-color: var(--mau-xanh); }
+.spread-bar input.rtl { direction: rtl; }
+
+/* lật ngang trên điện thoại: một dải ngang sát viền */
+.viewer-wrap.strip { width: 100vw; margin-left: calc(50% - 50vw); }
+.viewer.strip-mode { width: 100%; margin: 0; border: 0; border-radius: 0; box-shadow: none; background: #111; flex-direction: row; overflow-x: auto; overflow-y: hidden;
+  height: calc(100svh - var(--nav-h) - env(safe-area-inset-top, 0px)); scroll-snap-type: x proximity; overscroll-behavior-x: contain; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.viewer.strip-mode::-webkit-scrollbar { display: none; }
+.viewer.strip-mode.rtl { direction: rtl; }
+.viewer.strip-mode img { height: 100%; width: auto; max-width: none; flex: none; min-height: 0; scroll-snap-align: start; background: transparent; }
+.strip-count { text-align: center; font-family: 'Patrick Hand', cursive; color: var(--mau-nau-nhat); padding: 6px 0 0; font-size: 1rem; }
+
+/* nút gợi ý hướng lướt ở trang đầu */
+.read-hint { position: absolute; z-index: 5; display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; cursor: pointer;
+  font-family: 'Patrick Hand', cursive; font-size: 1.15rem; color: var(--mau-trang-chu); background: var(--mau-xanh); border: 2px solid var(--mau-xanh-dam);
+  border-radius: var(--tay-nut); box-shadow: 3px 4px 0 rgba(0,0,0,.2); transition: opacity .3s, transform .3s; }
+.read-hint[hidden] { display: none; }
+.read-hint.off { opacity: 0; pointer-events: none; transform: scale(.9); }
+.read-hint.pos-right { right: 18px; top: 50%; translate: 0 -50%; animation: nudgeR 1.4s ease-in-out infinite; }
+.read-hint.pos-left { left: 18px; top: 50%; translate: 0 -50%; animation: nudgeL 1.4s ease-in-out infinite; }
+.read-hint.pos-down { left: 50%; bottom: 22px; translate: -50% 0; position: fixed; animation: nudgeD 1.4s ease-in-out infinite; }
+@keyframes nudgeR { 0%,100% { margin-right: 0; } 50% { margin-right: -8px; } }
+@keyframes nudgeL { 0%,100% { margin-left: 0; } 50% { margin-left: -8px; } }
+@keyframes nudgeD { 0%,100% { margin-bottom: 0; } 50% { margin-bottom: -6px; } }
+
+/* header: chuông + sao */
+.icon-btn { position: relative; }
+.icon-btn .badge { position: absolute; top: 3px; right: 2px; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 999px; background: var(--mau-hong); color: #fff;
+  font-family: 'Patrick Hand', cursive; font-size: .78rem; line-height: 18px; text-align: center; border: 2px solid var(--mau-xanh); }
+.icon-btn .badge[hidden] { display: none; }
+.bell-area { position: relative; }
+.bell-panel { position: absolute; top: 50px; right: -60px; width: min(360px, calc(100vw - 24px)); background: var(--mau-giay); border: 2px solid var(--mau-net);
+  border-radius: var(--tay-vua); box-shadow: 4px 5px 0 var(--bong); z-index: 110; padding: 8px; animation: pop .18s ease-out; color: var(--mau-nau); }
+.bell-panel[hidden] { display: none; }
+.bell-head { display: flex; justify-content: space-between; align-items: center; padding: 4px 8px 8px; border-bottom: 2px dotted var(--mau-net); font-family: 'Patrick Hand', cursive; font-size: 1.15rem; color: var(--mau-xanh-dam); }
+.bell-list { max-height: 380px; overflow-y: auto; display: flex; flex-direction: column; gap: 4px; padding-top: 6px; }
+.nt-item { display: grid; grid-template-columns: 40px 1fr; gap: 10px; align-items: center; padding: 8px; border-radius: 12px; border: 0; background: transparent; text-align: left; cursor: pointer; color: inherit; width: 100%; }
+.nt-item:hover { background: var(--mau-xanh-nhat); }
+.nt-item.unread { background: color-mix(in srgb, var(--mau-vang) 45%, transparent); }
+.nt-item .cover { padding: 2px; border-radius: 6px; }
+.nt-item .cover-emoji { font-size: .9rem; margin-top: 25%; }
+.nt-item .cover-title, .nt-item .cover-ribbon { display: none; }
+.nt-text { font-size: .95rem; line-height: 1.35; min-width: 0; }
+.nt-text b { font-family: 'Patrick Hand', cursive; font-weight: normal; color: var(--mau-xanh-dam); font-size: 1.05rem; }
+.nt-text small { display: block; color: var(--mau-nau-nhat); font-size: .82rem; }
+.nt-empty { padding: 1.2rem .8rem; text-align: center; color: var(--mau-nau-nhat); font-family: 'Patrick Hand', cursive; font-size: 1.05rem; }
+.avatar-circle img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+.avatar-circle { overflow: hidden; }
+.dd-me { display: flex; align-items: center; gap: 10px; padding: 6px 8px 10px; border-bottom: 2px dotted var(--mau-net); margin-bottom: 4px; }
+.dd-me .av { width: 38px; height: 38px; border-radius: 50%; overflow: hidden; background: var(--mau-xanh-nhat); display: grid; place-items: center; flex: none; font-size: 1.2rem; }
+.dd-me .av img { width: 100%; height: 100%; object-fit: cover; }
+.dd-me b { font-family: 'Patrick Hand', cursive; font-weight: normal; font-size: 1.1rem; color: var(--mau-xanh-dam); display: block; line-height: 1.1; }
+.dd-me small { color: var(--mau-nau-nhat); font-size: .78rem; overflow-wrap: anywhere; }
+
+/* nút yêu thích */
+.fav-toggle[aria-pressed="true"] { background: var(--mau-vang); border-color: #C9A84A; color: #6A5A3A; }
+.h-badge.fav { background: #D8B24A; }
+
+/* lịch sử đọc */
+.hist-day { font-family: 'Patrick Hand', cursive; font-size: 1.15rem; color: var(--mau-nau-nhat); margin: 1.2rem 4px .5rem; }
+.hist-day:first-child { margin-top: 0; }
+.hist-list { display: flex; flex-direction: column; gap: 8px; }
+.hist-item { display: grid; grid-template-columns: 56px 1fr auto auto; gap: 14px; align-items: center; padding: 10px 12px; background: var(--mau-giay); border: 2px solid var(--mau-net); border-radius: var(--tay-vua); box-shadow: 3px 4px 0 var(--bong); }
+.hist-item .cover { padding: 3px; border-radius: 6px 8px 5px 9px; cursor: pointer; }
+.hist-item .cover-emoji { font-size: 1.3rem; margin-top: 30%; }
+.hist-item .cover-title, .hist-item .cover-ribbon { display: none; }
+.hist-body { min-width: 0; }
+.hist-title { font-family: 'Patrick Hand', cursive; font-size: 1.2rem; color: var(--mau-xanh-dam); border: 0; background: none; padding: 0; cursor: pointer; text-align: left; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: block; }
+.hist-chap { font-size: .95rem; color: var(--mau-nau); }
+.hist-time { font-size: .82rem; color: var(--mau-nau-nhat); }
+.hist-item .btn-submit { padding: 6px 16px; font-size: 1rem; }
+
+/* trang cá nhân */
+.pf-card { display: grid; grid-template-columns: 150px 1fr; gap: 1.6rem; align-items: start; }
+.pf-av { width: 150px; height: 150px; border-radius: 50%; overflow: hidden; background: var(--mau-xanh-nhat); display: grid; place-items: center; font-size: 4rem; border: 3px solid var(--mau-giay); box-shadow: 0 0 0 3px var(--mau-net), 4px 5px 0 4px var(--bong); position: relative; }
+.pf-av img { width: 100%; height: 100%; object-fit: cover; }
+.pf-name { font-family: 'Patrick Hand', cursive; font-size: clamp(1.8rem, 5vw, 2.3rem); color: var(--mau-xanh-dam); margin: 0; line-height: 1.1; }
+.pf-mail { color: var(--mau-nau-nhat); font-size: .95rem; margin: 2px 0 10px; overflow-wrap: anywhere; }
+.pf-bio { white-space: pre-line; line-height: 1.6; margin: 0 0 12px; font-size: 1.05rem; }
+.pf-bio.empty { color: var(--mau-nau-nhat); font-style: italic; }
+.pf-facts { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.pf-chip { font-family: 'Patrick Hand', cursive; font-size: 1rem; padding: 3px 12px; border-radius: 999px; background: var(--mau-kem); border: 2px solid var(--mau-net); }
+.pf-bday { background: var(--mau-vang); border-color: transparent; }
+.pf-edit-av { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.pf-edit-av label.pf-av { cursor: pointer; }
+.pf-edit-av label.pf-av::after { content: "📷"; position: absolute; right: 8px; bottom: 8px; width: 36px; height: 36px; border-radius: 50%; background: var(--mau-giay); display: grid; place-items: center; font-size: 1.1rem; box-shadow: 1px 2px 0 var(--bong); }
+.pf-edit-av input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.pf-count { text-align: right; font-size: .8rem; color: var(--mau-nau-nhat); margin-top: 2px; }
+
+@media (max-width: 680px) {
+  .pf-card { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+  .pf-card > div:last-child { width: 100%; text-align: left; }
+  .pf-facts { justify-content: center; }
+  .hist-item { grid-template-columns: 48px 1fr auto; gap: 10px; }
+  .hist-item .hist-del { grid-column: 3; grid-row: 1; }
+  .hist-item .btn-submit { grid-column: 2 / 4; justify-self: start; }
+  .bell-panel { position: fixed; top: calc(var(--nav-h) + env(safe-area-inset-top, 0px) + 6px); right: 12px; left: 12px; width: auto; }
+}

@@ -1,0 +1,90 @@
+/* ===== v17: bộ lọc dạng pulldown ===== */
+.lib-head .btn-submit { padding: 8px 18px; font-size: 1.05rem; }
+.lib-tools { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-bottom: .8rem; }
+.tool { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.tool > span { font-family: 'Patrick Hand', cursive; font-size: 1rem; color: var(--mau-xanh-dam); padding-left: 6px; }
+.pill-select {
+  appearance: none; -webkit-appearance: none; width: 100%; height: 44px; padding: 0 40px 0 16px; cursor: pointer;
+  border: 2px solid var(--mau-net); border-radius: var(--tay-vua); background-color: var(--mau-giay); color: var(--mau-nau);
+  font-family: 'Patrick Hand', cursive; font-size: 1.05rem; box-shadow: 3px 4px 0 var(--bong);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236E987C' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 12px center; background-size: 18px;
+}
+.pill-select:focus { outline: none; border-color: var(--mau-xanh); }
+.pill-select.on { border-color: var(--mau-xanh); background-color: var(--mau-xanh-nhat); color: var(--mau-xanh-dam); }
+.lib-summary { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; margin: 0 4px 1rem; font-family: 'Patrick Hand', cursive; color: var(--mau-nau-nhat); font-size: 1.02rem; }
+.lib-summary b { color: var(--mau-xanh-dam); font-weight: normal; }
+.cover img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.loading-shelf { text-align: center; padding: 2.4rem 1rem; font-family: 'Patrick Hand', cursive; font-size: 1.2rem; color: var(--mau-nau-nhat); }
+.loading-shelf .leaf { display: inline-block; animation: sway 1.6s ease-in-out infinite; font-size: 1.8rem; }
+
+/* ===== Màn chi tiết ===== */
+.detail-page { max-width: 1000px; margin: 0 auto; padding: 1rem 1rem 7rem; }
+.detail-page .breadcrumb { margin-bottom: 1.2rem; }
+.detail-card { background: var(--mau-giay); border: 2px solid var(--mau-net); border-radius: var(--tay-to); box-shadow: 4px 5px 0 var(--bong); padding: clamp(1rem, 3vw, 1.6rem); margin-bottom: 1.4rem; }
+.detail-main { display: grid; grid-template-columns: 220px 1fr; gap: clamp(1rem, 3vw, 2rem); align-items: start; }
+.detail-cover { position: relative; }
+.detail-cover .cover { box-shadow: 5px 6px 0 var(--bong), inset 0 0 0 2px rgba(255,255,255,.45); transform: rotate(-1.5deg); }
+.detail-cover .cover-emoji { font-size: 3.4rem; }
+.detail-cover .cover-title { font-size: 1rem; }
+.detail-cover::before { content: ""; position: absolute; top: -10px; left: 50%; width: 80px; height: 22px; transform: translateX(-50%) rotate(4deg); background: color-mix(in srgb, var(--mau-vang) 85%, transparent); z-index: 2; border-radius: 3px; }
+.detail-title { font-family: 'Patrick Hand', cursive; font-size: clamp(1.8rem, 5vw, 2.4rem); color: var(--mau-xanh-dam); margin: 0 0 .6rem; line-height: 1.1; }
+.facts { display: grid; grid-template-columns: max-content 1fr; gap: 6px 16px; margin: 0 0 .9rem; }
+.facts dt { font-family: 'Patrick Hand', cursive; color: var(--mau-nau-nhat); font-size: 1.02rem; }
+.facts dd { margin: 0; color: var(--mau-nau); font-weight: 600; min-width: 0; overflow-wrap: anywhere; }
+.facts .status { display: inline-block; }
+.detail-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 1rem; }
+.detail-actions .btn-submit { padding: 8px 20px; font-size: 1.05rem; }
+.detail-actions .btn-submit:disabled { opacity: .45; cursor: not-allowed; transform: none; }
+.detail-desc h3, .ch-head h3 { font-family: 'Patrick Hand', cursive; font-size: 1.35rem; color: var(--mau-xanh-dam); margin: 1.2rem 0 .5rem; display: flex; align-items: center; gap: 10px; }
+.detail-desc h3::after { content: ""; flex: 1; height: 2px; background: repeating-linear-gradient(90deg, var(--mau-net) 0 6px, transparent 6px 11px); }
+.detail-desc p { margin: 0; line-height: 1.65; white-space: pre-line; }
+.ch-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.ch-head h3 { margin: 0; }
+.ch-count { font-size: 1rem; color: var(--mau-nau-nhat); }
+.ch-list { list-style: none; margin: .9rem 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 8px; }
+.ch-item {
+  width: 100%; display: flex; align-items: center; gap: 12px; text-align: left; cursor: pointer; padding: 10px 14px;
+  background: var(--mau-kem); border: 2px solid var(--mau-net); border-radius: var(--tay-vua); color: var(--mau-nau); transition: .18s;
+}
+.ch-item:hover { border-color: var(--mau-xanh); background: var(--mau-xanh-nhat); transform: translateX(2px); }
+.ch-num { flex: none; min-width: 44px; height: 44px; padding: 0 6px; border-radius: 50%; display: grid; place-items: center; background: var(--mau-vang); color: #6A5A3A; font-family: 'Patrick Hand', cursive; font-size: 1.1rem; }
+.ch-text { min-width: 0; display: flex; flex-direction: column; }
+.ch-name { font-family: 'Patrick Hand', cursive; font-size: 1.1rem; color: var(--mau-xanh-dam); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ch-date { font-size: .82rem; color: var(--mau-nau-nhat); }
+.ch-item.read .ch-num { background: var(--mau-xanh-nhat); color: var(--mau-xanh-dam); }
+.ch-item.last { border-color: var(--mau-xanh); }
+.ch-empty { color: var(--mau-nau-nhat); font-family: 'Patrick Hand', cursive; font-size: 1.1rem; margin: .8rem 0 0; }
+
+/* ===== Trang đọc ===== */
+.viewer img { display: block; width: 100%; height: auto; min-height: 240px; background: var(--viewer); border-bottom: 2px dashed var(--mau-net); }
+.viewer img:last-child { border-bottom: 0; }
+.viewer img.loaded { min-height: 0; }
+.reader-empty { text-align: center; padding: 3rem 1rem; }
+.reader-empty .big { font-size: 2.6rem; }
+.reader-empty h3 { font-family: 'Patrick Hand', cursive; font-size: 1.5rem; color: var(--mau-xanh-dam); margin: .4rem 0; }
+.reader-empty p { color: var(--mau-nau-nhat); margin: 0 0 1rem; }
+.btn-nav:disabled { opacity: .4; cursor: default; transform: none; }
+
+/* ===== Upload ===== */
+.existing-note {
+  display: none; margin: -4px 0 14px; padding: 10px 14px; border-radius: var(--tay-vua);
+  background: var(--mau-xanh-nhat); border: 2px dashed var(--mau-xanh); color: var(--mau-xanh-dam);
+  font-family: 'Patrick Hand', cursive; font-size: 1.02rem; line-height: 1.4;
+}
+.existing-note.show { display: block; animation: pop .2s ease-out; }
+.locked-meta { opacity: .55; pointer-events: none; filter: grayscale(.4); }
+.field-row { display: grid; grid-template-columns: 130px 1fr; gap: 12px; }
+.upload-note { font-size: .88rem; color: var(--mau-nau-nhat); margin: 4px 0 0; }
+.btn-submit:disabled { opacity: .55; cursor: wait; }
+
+@media (max-width: 680px) {
+  .lib-tools { grid-template-columns: 1fr 1fr; }
+  .lib-tools .tool:last-child { grid-column: 1 / -1; }
+  .detail-main { grid-template-columns: 1fr; }
+  .detail-cover { width: min(190px, 60%); margin: 6px auto 4px; }
+  .detail-title { text-align: center; }
+  .detail-actions .btn-submit { flex: 1 1 auto; }
+  .ch-list { grid-template-columns: 1fr; }
+  .field-row { grid-template-columns: 1fr; gap: 0; }
+}
