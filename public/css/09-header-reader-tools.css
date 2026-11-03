@@ -37,9 +37,11 @@ body[data-screen="reader"] .btn-page-up, body[data-screen="reader"] .btn-read-se
 .rp-opt small { color: var(--mau-nau-nhat); font-size: .8rem; line-height: 1.25; display: block; }
 .rp-opt::after { content: ""; width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--mau-xam); }
 .rp-opt[aria-checked="true"]::after { border-color: var(--mau-xanh); background: radial-gradient(var(--mau-xanh) 0 45%, transparent 50%); }
-#readDirRow { margin-top: 10px; }
-#readDirRow .seg { display: grid; grid-template-columns: 1fr 1fr; width: 100%; box-shadow: none; }
-#readDirRow .seg-btn { white-space: normal; padding: 6px 4px; font-size: .95rem; }
+.read-dir-row, #readDirRow { margin-top: 10px; }
+.read-dir-row .seg, #readDirRow .seg { display: grid; grid-template-columns: 1fr 1fr; width: 100%; box-shadow: none; }
+.read-dir-row .seg-btn, #readDirRow .seg-btn { white-space: normal; padding: 6px 4px; font-size: .95rem; }
+dialog.set-dlg .read-grid { margin-top: .2rem; }
+dialog.set-dlg .read-dir-row { margin-top: 1rem; }
 
 /* cài đặt dạng popup */
 dialog.set-dlg { width: min(760px, calc(100vw - 24px)); max-width: none; padding: 0; }
