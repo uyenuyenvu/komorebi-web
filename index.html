@@ -12,7 +12,16 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500;700&family=Patrick+Hand&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="public/css/style.css">
+<link rel="stylesheet" href="public/css/00-base.css">
+<link rel="stylesheet" href="public/css/01-filters-detail-reader.css">
+<link rel="stylesheet" href="public/css/02-upload.css">
+<link rel="stylesheet" href="public/css/03-layout-menu-home.css">
+<link rel="stylesheet" href="public/css/04-master-dialog-settings.css">
+<link rel="stylesheet" href="public/css/05-reader-user.css">
+<link rel="stylesheet" href="public/css/06-icons-avatar.css">
+<link rel="stylesheet" href="public/css/07-upload-progress.css">
+<link rel="stylesheet" href="public/css/08-preview-roles.css">
+<link rel="stylesheet" href="public/css/09-header-reader-tools.css">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script src="config.js"></script>
 </head>
@@ -23,7 +32,7 @@
     <form class="gate-card" id="gateLogin" hidden>
       <div class="gate-leaf" aria-hidden="true">🍃</div>
       <h2>KOMOREBI</h2>
-      <p class="gate-sub" id="g-sub">Chào anh, đăng nhập để đọc tiếp nhé</p>
+      <p class="gate-sub" id="g-sub">Chào cưng, đăng nhập để đọc tiếp nhé</p>
       <div class="field-group">
         <label for="g-email">Email</label>
         <input type="email" id="g-email" autocomplete="username" required>
@@ -49,12 +58,11 @@
     <div class="gate-card" id="gateConfig" hidden>
       <div class="gate-leaf" aria-hidden="true">🔌</div>
       <h2 style="font-size:1.6rem;letter-spacing:0">Chưa kết nối máy chủ</h2>
-      <p class="gate-sub" style="margin-bottom:0">Đặt file <b>config.js</b> (đã điền URL và anon key của Supabase) ở thư mục gốc dự án (cạnh index.html) rồi tải lại trang.</p>
+      <p class="gate-sub" style="margin-bottom:0">Đặt file <b>config.js</b> (đã điền URL và anon key của Supabase) cạnh file index.html rồi tải lại trang.</p>
     </div>
   </div>
-
   <div class="toast" id="toast" role="status"></div>
-
-<script src="public/js/auth.js"></script>
+<script src="public/js/00-multipage.js"></script>
+<script src="public/js/auth-login.js"></script>
 </body>
 </html>
