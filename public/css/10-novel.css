@@ -1,0 +1,104 @@
+/* ===================== TIỂU THUYẾT (truyện chữ) ===================== */
+:root {
+  /* chữ không chân: San Francisco (Apple), Google Sans Text / Roboto (Android), Segoe UI (Windows) — đều đủ dấu tiếng Việt */
+  --font-sans: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Google Sans Text', Roboto, 'Segoe UI', 'Noto Sans', 'Helvetica Neue', Arial, sans-serif;
+  --n-size: 20px; --n-line: 1.85; --n-font: 'EB Garamond', serif; --n-w: 860px; --n-bg: #FFFDF8; --n-ink: #4a3f36;
+}
+
+/* ---------- nhãn loại truyện ---------- */
+.kind-tag { display: inline-flex; align-items: center; gap: 3px; font-family: 'Patrick Hand', cursive; font-size: .82rem; line-height: 1.5; padding: 0 9px; border-radius: 999px; border: 1.5px solid currentColor; white-space: nowrap; }
+.kind-tag.comic { color: #5C6FA0; background: #E5EAF5; }
+.kind-tag.novel { color: #8a5e8f; background: #F3E6F2; }
+:root[data-theme="dark"] .kind-tag.comic { color: #AFC0E8; background: #2E3446; }
+:root[data-theme="dark"] .kind-tag.novel { color: #E2B8E2; background: #43324A; }
+
+/* ---------- bìa tiểu thuyết: gáy sách + tên in kiểu sách ---------- */
+.cover.novel { padding-left: 16px; }
+.cover.novel::before { content: ""; position: absolute; z-index: 1; left: 0; top: 0; bottom: 0; width: 10px; pointer-events: none; background: linear-gradient(90deg, rgba(0,0,0,.2), rgba(255,255,255,.28) 60%, rgba(0,0,0,.08)); }
+.cover.novel .cover-title { font-family: 'EB Garamond', serif; font-style: italic; font-weight: 700; background: none; color: #3d332b; border-top: 1.5px solid rgba(61,51,43,.4); border-bottom: 1.5px solid rgba(61,51,43,.4); border-radius: 0; }
+.cover .kind-badge { position: absolute; z-index: 2; top: 8px; right: 0; font-family: 'Patrick Hand', cursive; font-size: .72rem; padding: 0 7px 0 9px; border-radius: 8px 0 0 8px; color: #fff; background: #a87aa8; box-shadow: -1px 1px 0 rgba(0,0,0,.12); }
+
+/* ---------- trang chủ: thẻ tiểu thuyết dạng ngang ---------- */
+.n-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 14px; }
+.n-card { display: grid; grid-template-columns: 96px 1fr; gap: 14px; padding: 12px; text-align: left; color: inherit; cursor: pointer;
+  background: var(--mau-giay); border: 2px solid var(--mau-net); border-radius: var(--tay-to); box-shadow: 3px 4px 0 var(--bong); transition: border-color .15s, transform .15s; }
+.n-card:hover { border-color: var(--mau-xanh); transform: translateY(-2px); }
+.n-card h4 { margin: 0 0 4px; font-family: 'Patrick Hand', cursive; font-weight: normal; font-size: 1.22rem; color: var(--mau-xanh-dam); line-height: 1.2; }
+.n-card .n-tags { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.n-card .n-chip { font-family: 'Patrick Hand', cursive; font-size: .85rem; padding: 0 9px; border-radius: 999px; background: var(--mau-xanh-nhat); color: var(--mau-xanh-dam); }
+.n-card .excerpt { margin: 7px 0; font-style: italic; font-size: .96rem; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.n-card .n-meta { font-size: .84rem; color: var(--mau-nau-nhat); display: flex; gap: 10px; flex-wrap: wrap; }
+
+/* ---------- thư viện: chọn loại ---------- */
+.lib-head { flex-wrap: wrap; gap: 12px; }
+.kind-seg { display: inline-flex; padding: 4px; gap: 4px; background: var(--mau-giay); border: 2px solid var(--mau-net); border-radius: var(--tay-nut); box-shadow: 3px 4px 0 var(--bong); max-width: 100%; overflow-x: auto; scrollbar-width: none; }
+.kind-seg button { border: 0; background: transparent; padding: 7px 14px; border-radius: var(--tay-nut); font-family: 'Patrick Hand', cursive; font-size: 1.05rem; color: var(--mau-nau-nhat); white-space: nowrap; cursor: pointer; }
+.kind-seg button[aria-pressed="true"] { background: var(--mau-xanh); color: var(--mau-trang-chu); }
+.kind-seg .n { font-size: .8rem; opacity: .75; }
+
+/* ---------- upload: chọn loại truyện ---------- */
+.kind-card { margin-bottom: 1.2rem; }
+.kind-pick { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.kp { display: grid; grid-template-columns: 60px 1fr 22px; gap: 12px; align-items: center; text-align: left; padding: 14px 16px; cursor: pointer; color: inherit;
+  background: var(--mau-kem); border: 2px solid var(--mau-net); border-radius: var(--tay-to); transition: border-color .15s, transform .15s; }
+.kp:hover:not(:disabled) { border-color: var(--mau-xanh); transform: translateY(-2px); }
+.kp[aria-checked="true"] { background: var(--mau-xanh-nhat); border-color: var(--mau-xanh); box-shadow: 3px 4px 0 var(--bong); }
+.kp:disabled { opacity: .55; cursor: not-allowed; }
+.kp .kp-ic { font-size: 2.4rem; text-align: center; }
+.kp b { font-family: 'Patrick Hand', cursive; font-weight: normal; font-size: 1.3rem; color: var(--mau-xanh-dam); display: block; }
+.kp small { color: var(--mau-nau-nhat); font-size: .92rem; line-height: 1.35; display: block; }
+.kp::after { content: ""; width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--mau-nau-nhat); }
+.kp[aria-checked="true"]::after { border-color: var(--mau-xanh); background: radial-gradient(var(--mau-xanh) 0 45%, transparent 50%); }
+
+/* ---------- trình soạn chương chữ ---------- */
+.n-editor { border: 2px solid var(--mau-net); border-radius: var(--tay-to); background: var(--mau-giay); overflow: hidden; }
+.ne-bar { display: flex; flex-wrap: wrap; gap: 3px; align-items: center; padding: 6px 8px; border-bottom: 2px dashed var(--mau-net); background: var(--mau-kem); }
+.ne-bar button, .ne-bar label { border: 2px solid transparent; background: transparent; border-radius: 10px; padding: 4px 10px; min-width: 36px; font-size: .95rem; color: var(--mau-nau); cursor: pointer; font-family: 'EB Garamond', serif; display: inline-flex; align-items: center; gap: 4px; }
+.ne-bar button:hover, .ne-bar label:hover { background: var(--mau-giay); border-color: var(--mau-net); }
+.ne-bar button[aria-pressed="true"] { background: var(--mau-xanh-nhat); border-color: var(--mau-xanh); }
+.ne-bar .sep { width: 2px; height: 22px; background: var(--mau-net); margin: 0 4px; }
+.ne-bar .grow { flex: 1; }
+.ne-area { min-height: 340px; max-height: 65vh; overflow-y: auto; padding: 22px clamp(16px, 4vw, 48px); font-family: 'EB Garamond', serif; font-size: 1.12rem; line-height: 1.85; outline: none; color: var(--mau-nau); white-space: normal; }
+.ne-area p { margin: 0 0 .9em; text-indent: 1.4em; }
+.ne-area blockquote, .novel-paper blockquote { margin: 0 0 1em; padding: .2em 0 .2em 1em; border-left: 3px solid var(--mau-xanh); font-style: italic; }
+.ne-area .scene, .novel-paper .scene { text-align: center; text-indent: 0; letter-spacing: .6em; opacity: .6; margin: 1.4em 0; }
+.ne-area:empty::before { content: attr(data-ph); color: var(--mau-nau-nhat); font-style: italic; }
+.ne-preview { padding: 22px clamp(16px, 4vw, 48px); max-height: 65vh; overflow-y: auto; font-family: 'EB Garamond', serif; font-size: 1.12rem; line-height: 1.85; }
+.ne-preview p { margin: 0 0 1em; text-indent: 1.6em; }
+.ne-status { display: flex; gap: 12px; flex-wrap: wrap; justify-content: space-between; align-items: center; padding: 7px 14px; border-top: 2px dashed var(--mau-net); background: var(--mau-kem); font-size: .85rem; color: var(--mau-nau-nhat); font-family: var(--font-sans); }
+.ne-status button { border: 0; background: none; color: var(--mau-xanh-dam); text-decoration: underline; cursor: pointer; font: inherit; padding: 0; }
+.ne-hint { font-size: .85rem; color: var(--mau-nau-nhat); margin: .5rem 0 0; font-family: var(--font-sans); }
+
+/* ---------- trang đọc tiểu thuyết ---------- */
+#readerMain.novel { max-width: 1180px; }
+.novel-paper { max-width: var(--n-w); margin: 0 auto; background: var(--n-bg); color: var(--n-ink); font-family: var(--n-font); font-size: var(--n-size); line-height: var(--n-line);
+  border: 1.5px solid color-mix(in srgb, var(--n-ink) 14%, transparent); border-radius: var(--tay-to); padding: clamp(28px, 4.5vw, 64px) clamp(28px, 6vw, 80px); transition: background .2s, color .2s; overflow-wrap: break-word; }
+.novel-paper p { margin: 0 0 1em; text-indent: 1.6em; }
+.novel-paper.justify p { text-align: justify; }
+.novel-paper .n-empty { text-align: center; text-indent: 0; color: var(--mau-nau-nhat); font-style: italic; }
+.n-progress { position: fixed; z-index: 120; left: 0; right: 0; top: 0; height: 3px; pointer-events: none; display: none; }
+.n-progress i { display: block; height: 100%; width: 0; background: var(--mau-hong); transition: width .12s; }
+html.reading-novel .n-progress { display: block; }
+#rpNovel .field-label { margin-top: 10px; }
+.np-row { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.np-row output { min-width: 50px; text-align: center; font-family: var(--font-sans); }
+.np-opt, .np-sw { border: 2px solid var(--mau-net); background: var(--mau-kem); color: var(--mau-nau); border-radius: 10px; padding: 5px 10px; font-size: .95rem; cursor: pointer; }
+.np-opt[aria-pressed="true"], .np-sw[aria-pressed="true"] { border-color: var(--mau-xanh); background: var(--mau-xanh-nhat); }
+.np-sw { min-width: 52px; font-family: 'EB Garamond', serif; }
+.np-sw[data-nbg="kem"] { background: #FFFDF8; color: #4a3f36; } .np-sw[data-nbg="trang"] { background: #fff; color: #2f2a26; }
+.np-sw[data-nbg="sepia"] { background: #F1E4C8; color: #5b4630; } .np-sw[data-nbg="dem"] { background: #23251F; color: #DED6C6; }
+.np-sw[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--mau-giay), 0 0 0 4px var(--mau-xanh); }
+.np-check { display: flex; gap: 8px; align-items: center; margin-top: 12px; font-size: .95rem; cursor: pointer; }
+.np-check input { width: 18px; height: 18px; accent-color: var(--mau-xanh); }
+
+@media (max-width: 760px) {
+  .kind-pick { grid-template-columns: 1fr; }
+  .n-grid { grid-template-columns: 1fr; }
+  .n-card { grid-template-columns: 80px 1fr; }
+  .np-wide { display: none !important; }
+  /* điện thoại: chữ tràn sát hai mép, không khung; đổi nền là đổi cả màn hình đọc */
+  html.reading-novel, html.reading-novel body { background: var(--n-bg) !important; }
+  html.reading-novel #readerMain header h2, html.reading-novel #readerMain .update-date { color: var(--n-ink); }
+  html.reading-novel #readerMain { padding-left: 0; padding-right: 0; }
+  html.reading-novel .novel-paper { max-width: none; border: 0; border-radius: 0; box-shadow: none; padding: 8px 18px 24px; }
+}
